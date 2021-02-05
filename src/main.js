@@ -3,6 +3,11 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import "@/plugins/propertiesApi";
+import "@/assets/css/main.css";
+
+import { registerBaseComponents } from "@/helpers/registerBaseComponents";
+registerBaseComponents(Vue);
 
 Vue.config.productionTip = false;
 
