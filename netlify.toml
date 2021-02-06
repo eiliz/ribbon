@@ -1,8 +1,10 @@
+# api redirect.
 [[redirects]]
-  from = "/api"
-  to = "https://partnerapi.funda.nl/feeds/Aanbod.svc/json"
+  from = "/api/*"
+  to = "https://partnerapi.funda.nl/feeds/Aanbod.svc/json/:splat"
   status = 200
 
+# SPA router support.
 [[redirects]]
   from = "/*"
   to = "/index.html"
