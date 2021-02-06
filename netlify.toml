@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/api"
-  to = "http://partnerapi.funda.nl/feeds/Aanbod.svc/json/"
+  to = "https://partnerapi.funda.nl/feeds/Aanbod.svc/json"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
