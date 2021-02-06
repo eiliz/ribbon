@@ -1,9 +1,12 @@
 module.exports = {
   devServer: {
     proxy: {
-      "^/json": {
+      "/api": {
         target: process.env.VUE_APP_BASE_URL,
         changeOrigin: true,
+        pathRewrite: {
+          "^/api": ""
+        },
         logLevel: "debug"
       }
     }
@@ -19,5 +22,10 @@ module.exports = {
       .end()
       .use("vue-svg-loader")
       .loader("vue-svg-loader");
+  },
+  pwa: {
+    workboxOptions: {
+      exclude: [/_redirects/]
+    }
   }
 };

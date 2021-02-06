@@ -6,8 +6,7 @@ const throttleConfig = {
 };
 
 export default axios.create({
-  baseURL:
-    process.env.NODE_ENV === "production" ? process.env.VUE_APP_BASE_URL : "/",
+  baseURL: "/",
   adapter: throttleAdapterEnhancer(axios.defaults.adapter, throttleConfig),
   timeout: 3000,
   headers: {

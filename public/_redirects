@@ -1,1 +1,3 @@
+# Netlify settings for single-page application
 /*    /index.html   200
+/api/*  http://partnerapi.funda.nl/feeds/Aanbod.svc/json/:splat  200

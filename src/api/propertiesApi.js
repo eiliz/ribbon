@@ -3,8 +3,8 @@ import httpClient from "./httpClient";
 const apiKey = process.env.VUE_APP_FUNDA_API_KEY;
 
 const endpoints = {
-  property: id => `/json/detail/${apiKey}/koop/${id}/`,
-  search: `/json/${apiKey}/`
+  property: id => `/api/detail/${apiKey}/koop/${id}/`,
+  search: `/api/${apiKey}/`
 };
 
 const getProperty = id => httpClient.get(endpoints.property(id));
