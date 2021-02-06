@@ -21,7 +21,7 @@ export default {
       return this.status === apiStatus.SUCCESS;
     }
   },
-  async created() {
+  created() {
     this.fetchProperty();
   },
   methods: {
@@ -30,8 +30,9 @@ export default {
       const id = this.$route.params.id;
 
       try {
-        const { data } = await this.$propertiesApi.getProperty(id);
-        this.propertyObject = data;
+        const res = await this.$propertiesApi.getProperty(id);
+        console.log(res);
+        this.propertyObject = res.data;
         this.status = apiStatus.SUCCESS;
       } catch (err) {
         this.status = apiStatus.ERROR;
