@@ -169,7 +169,6 @@ export default {
       );
     },
     onShowAllMedia() {
-      console.log("here");
       this.currentComponentInModal = "ListingAllMedia";
       this.showModal = true;
     },
