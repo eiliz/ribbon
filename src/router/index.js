@@ -16,9 +16,12 @@ const routes = [
         component: Home
       },
       {
-        path: "/property/:id",
-        name: "Property",
-        component: () => import("../views/Property.vue")
+        path: "/listing/:id",
+        name: "SingleListing",
+        component: () =>
+          import(
+            /* webpackChunkName: "single-listing" */ "../views/SingleListing.vue"
+          )
       }
     ]
   }

@@ -14,7 +14,12 @@ module.exports = {
     extend: {}
   },
   variants: {
-    extend: {}
+    extend: {
+      opacity: ["disabled"]
+    }
   },
-  plugins: []
+  plugins: [],
+  corePlugins: {
+    objectFit: true
+  }
 };

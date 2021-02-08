@@ -1,13 +1,16 @@
 import Vue from "vue";
 import App from "./App.vue";
-// import "./registerServiceWorker";
+import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
-import "@/plugins/propertiesApi";
+import PortalVue from "portal-vue";
+import "@/plugins/listingsApiPlugin";
 import "@/assets/css/main.css";
 
 import { registerBaseComponents } from "@/helpers/registerBaseComponents";
 registerBaseComponents(Vue);
+
+Vue.use(PortalVue);
 
 Vue.config.productionTip = false;
 

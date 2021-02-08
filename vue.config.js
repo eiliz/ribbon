@@ -1,3 +1,8 @@
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+
+const devPlugins = [new BundleAnalyzerPlugin()];
+
 module.exports = {
   devServer: {
     proxy: {
@@ -6,8 +11,8 @@ module.exports = {
         changeOrigin: true,
         pathRewrite: {
           "^/api": ""
-        },
-        logLevel: "debug"
+        }
+        // logLevel: "debug"
       }
     }
   },
@@ -27,5 +32,9 @@ module.exports = {
     workboxOptions: {
       exclude: [/_redirects/]
     }
-  }
+  },
+  configureWebpack: {
+    plugins: process.env.NODE_ENV !== "production" ? devPlugins : []
+  },
+  productionSourceMap: false
 };

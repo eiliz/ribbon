@@ -13,27 +13,33 @@ h6 {
 }
 
 h1 {
-  @apply text-5xl;
+  @apply text-3xl;
+  @apply md:text-4xl;
 }
 
 h2 {
-  @apply text-4xl;
+  @apply text-2xl;
+  @apply md:text-3xl;
 }
 
 h3 {
-  @apply text-3xl;
+  @apply text-xl;
+  @apply md:text-2xl;
 }
 
 h4 {
-  @apply text-2xl;
+  @apply text-lg;
+  @apply md:text-xl;
 }
 
 h5 {
-  @apply text-xl;
+  @apply text-base;
+  @apply md:text-lg;
 }
 
 h6 {
-  @apply text-lg;
+  @apply text-sm;
+  @apply md:text-base;
 }
 
 a,

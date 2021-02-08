@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <transition name="fade" appear>
-      <router-view />
+      <div>
+        <router-view />
+
+        <portal-target name="modals"></portal-target>
+      </div>
     </transition>
   </div>
 </template>
