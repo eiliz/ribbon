@@ -1,19 +1,25 @@
 <script>
 import apiStatus from "@/api/constants/apiStatus";
+import statusMixin from "@/mixins/statusMixin";
 
 export default {
+  props: {
+    filters: {
+      required: false,
+      default: () => []
+    },
+    page: {
+      required: false,
+      default: 1
+    }
+  },
+  mixins: [statusMixin],
   data() {
     return {
       listings: null,
       paging: null,
-      meta: null,
-      status: apiStatus.IDLE
+      meta: null
     };
-  },
-  computed: {
-    isLoaded() {
-      return this.status === apiStatus.SUCCESS;
-    }
   },
   created() {
     this.fetchListings();
@@ -25,7 +31,7 @@ export default {
       try {
         const {
           data: { Objects, Metadata, Paging }
-        } = await this.$listingsApi.searchListings();
+        } = await this.$listingsApi.searchListings(this.filters, this.page);
 
         this.listings = Objects;
         this.paging = Paging;
@@ -33,18 +39,21 @@ export default {
 
         this.status = apiStatus.SUCCESS;
       } catch (err) {
-        console.log(err);
+        console.error(err);
         this.status = apiStatus.ERROR;
+        this.error = err;
       }
     }
   },
   render() {
     return this.$scopedSlots.default({
       listings: this.listings,
-      isLoaded: this.isLoaded
+      meta: this.meta,
+      paging: this.paging,
+      isLoaded: this.isLoaded,
+      hasError: this.hasError,
+      error: this.error
     });
   }
 };
 </script>
-
-// property/f4bf9fea-53c0-4492-a0bf-1b156f121a8a

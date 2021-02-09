@@ -9,14 +9,18 @@ const endpoints = {
 
 const getListing = id => httpClient.get(endpoints.listing(id));
 
-const searchListings = filtersList =>
-  httpClient.get(endpoints.search, {
+const searchListings = (filters = [], page = 1) => {
+  const filtersString = filters.join("/");
+
+  return httpClient.get(endpoints.search, {
     params: {
       type: "koop",
-      zo: filtersList || "/amsterdam/tuin/video/"
+      zo: filtersString
+        ? `${filtersString}/p${page}`
+        : `/amsterdam/tuin/video/p${page}`
     }
   });
-
+};
 export default {
   getListing,
   searchListings

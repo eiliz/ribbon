@@ -12,12 +12,12 @@ const routes = [
     children: [
       {
         path: "/",
-        name: "Home",
+        name: "home",
         component: Home
       },
       {
         path: "/listing/:id",
-        name: "SingleListing",
+        name: "single-listing",
         component: () =>
           import(
             /* webpackChunkName: "single-listing" */ "../views/SingleListing.vue"

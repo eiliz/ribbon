@@ -1,7 +1,7 @@
 <template>
   <div>
     <app-header></app-header>
-    <router-view class="xl:container mx-auto py-8" />
+    <router-view class="xl:container mx-auto" />
   </div>
 </template>
 
