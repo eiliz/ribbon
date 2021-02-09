@@ -29,22 +29,22 @@ export default {
         return {
           index: entry.IndexNumber,
           sm: {
-            url: entry.MediaItems[0].Url,
+            url: entry.MediaItems[0].Url.replace("http:", "https:"),
             width: entry.MediaItems[0].Width,
             height: entry.MediaItems[0].Height
           },
           md: {
-            url: entry.MediaItems[1].Url,
+            url: entry.MediaItems[1].Url.replace("http:", "https:"),
             width: entry.MediaItems[1].Width,
             height: entry.MediaItems[1].Height
           },
           lg: {
-            url: entry.MediaItems[2].Url,
+            url: entry.MediaItems[2].Url.replace("http:", "https:"),
             width: entry.MediaItems[2].Width,
             height: entry.MediaItems[2].Height
           },
           xl: {
-            url: entry.MediaItems[3].Url,
+            url: entry.MediaItems[3].Url.replace("http:", "https:"),
             width: entry.MediaItems[3].Width,
             height: entry.MediaItems[3].Height
           },
