@@ -10,14 +10,18 @@
         'md:col-span-1 md:row-span-1': i > 0
       }"
     >
-      <!-- If the API had offered a wider range of image sizes, I'd have had multiple source tags in here to load the appropriate sizes based on the screen size. However the largest image size offered by the API is the one that's usable from medium and larger screens. -->
+      <!-- If the API had offered a wider range of image sizes, I'd have had
+      multiple source tags in here to load the appropriate sizes based on the
+      screen size. However the largest image size offered by the API is the one
+      that's usable from medium and larger screens. -->
+      <!-- :loading="i > 3 ? 'lazy' : 'eager'" -->
       <picture>
         <source :srcset="`${img.xl.url} 1x`" media="(min-width: 768px)" />
         <img
           @click="onImageClick(i)"
           :alt="img.alt"
           :src="img.lg.url"
-          :loading="i > 3 ? 'lazy' : 'eager'"
+          loading="lazy"
           class="object-cover"
         />
       </picture>

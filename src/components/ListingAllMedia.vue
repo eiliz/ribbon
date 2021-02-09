@@ -8,12 +8,7 @@
         <div v-for="img in collection" :key="img.index">
           <picture>
             <source :srcset="`${img.xl.url} 1x`" media="(min-width: 768px)" />
-            <img
-              :alt="img.alt"
-              :src="img.lg.url"
-              loading="eager"
-              class="object-cover"
-            />
+            <img :alt="img.alt" :src="img.lg.url" class="object-cover" />
           </picture>
         </div>
       </div>
