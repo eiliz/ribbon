@@ -8,7 +8,7 @@
     <template v-slot:slides>
       <div
         v-for="(img, i) in collection"
-        :key="img.index"
+        :key="i"
         class="glide__slide
       flex flex-col justify-center"
       >
