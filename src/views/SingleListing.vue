@@ -32,7 +32,7 @@
       <section class="max-w-5xl mx-auto px-4 xl:px-0 py-4 xl:py-8">
         <listing-intro
           :data="listingIntro"
-          class="border-b border-gray-300 pb-2"
+          class="border-b border-gray-300 pb-2 mb-4 md:mb-8"
         >
         </listing-intro>
 
@@ -40,7 +40,7 @@
 
         <listing-map
           :mapLocation="mapLocation"
-          class="mt-8 md:mt-12"
+          class="my-8 md:my-24"
         ></listing-map>
       </section>
 

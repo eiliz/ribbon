@@ -51,7 +51,3 @@ a:active {
 a:hover {
   @apply underline;
 }
-
-a:visited {
-  @apply text-indigo-500;
-}

@@ -18,7 +18,7 @@
           :alt="img.alt"
           :src="img.lg.url"
           :loading="i > 3 ? 'lazy' : 'eager'"
-          class="object-cover"
+          class="object-cover cursor-pointer"
         />
       </picture>
     </div>

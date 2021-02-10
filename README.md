@@ -1,59 +1,64 @@
 # Ribbon
 
-[Live demo on netlify](https://adoring-lovelace-1156cd.netlify.app/)
+[Live demo on netlify](https://ribbon-funda.netlify.app)
 
-![ribbon](./cambio.png?raw=true)
+![ribbon](./ribbon.png?raw=true)
 
 ## Features
 
-Cambio uses the exchangeratesapi.io API to perform currency conversion and plot
-the variation in rates in a graph.
+Ribbon uses funda's API to retrive lists of properties as well as individual properties.
 
-You can type in the first input and the result will appear in the second one. If
-you start typing in the second input, it updates the first input using the
-stored exchange rate, without making another API call.
+On larger screens it shows a grid of images at the top as well as a link to show
+all media items available. On small screens it shows a carousel of images
+instead.
 
-By default the app uses the current date for the exchange rates and the past
-week for the period plotted on the chart.
+On larger screens if you click on an image from the grid it will open a carousel
+in a modal. If the property has a video available, its poster iamge will be
+shown in the grid and clicking on it will open the video in a modal.
 
-If you change the data in the calendar, the app makes an API call to get the new
-rates and updates both the result input as well as the chart data.
+Clicking the Show all media button opens a modal that shows a grid of all media
+items including a video if available.
 
-I've also created a favorites widget that allows you to save preferred currency
-pairs that are shown in the sidebar and synced to the local storage.
+There's also a Google Map of the property's location displayed at the bottom.
 
-Clicking on a favorite pair from the sidebar will set the current currencies to
-those values and update the covnersion result and the chart.
+The home of the app will show the latest properties coming in from the API based
+on a harcoded search although the API service I created in the project does
+support sending filters and the specific page to retrieve.
 
 The app is also fully responsive and resizes smoothly for smaller screens.
 
+I've also implemented lazy loading for the images where needed and used the
+srcset and sizes attributes to load the right size.
+
+What's not currently implemented is for example preloading images in the
+carousel when the user clicks the next button so that the images are there when
+the carousel gets to that point.
+
+Throughout I've tried to use dynamic imports to make Webpack split the bundles
+into smaller pieces and also to only load them when they're needed.
+
+## Deployment
+
+Because the API doesn't support CORS I've setup Netlify as a proxy to be able to
+make the API calls work. The settings are in the netlify.toml file.
+
 ## HTTP client
 
-The HTTP client is abstracted so that the currently used library, axios can be
+The HTTP client is abstracted so that the currently used library (axios) can be
 swapped for another one without making edits across the repo.
 
 It's also configured to throttle the API requests based on a duration set in the env files, with different values for production and
 development.
 
-What this means is so that if you made this request
-history?base=EUR&start_at=2020-12-04&end_at=2021-01-04, the call to the API gets
-through, then if the URL changes because you select a different currency, date
-or period for the chart, another requests gets made but if afterwards, within
-the throttling duration you make a call to the same URL (same settings for dates
-and currency), then you get a cached response, no extra call will be made to the
-API.
+What this means is that the library creates an internal cache where it stores
+responses based on the request URL and the specific throttling duration setting.
+If the actions of the user will generate requests to URL's that already exist in
+the cache, and the throttling duration has not expired yet, the library will
+intercept the request and repond with the cached response instead of reaching
+across the network.
 
-After the throttling duration has expired, hitting the same URL will results in
+After the throttling duration has expired, hitting the same URL will result in
 actual calls across the network.
-
-I've also handled corner cases like for example when you select a non trading
-day like a weekend day or Christmas and the period for the chart is set to 1
-day. In that case the /history endpoint will return an empty object for the
-rates. So I'm checking the object and if's empty I'll make a second call to
-another endpoint the API provides that gives you the rates for the most recent
-trading day relative to the date you send. It also returns the date of that
-specific day and with these I can put together a rates object in the same shape
-that the hisory endpoint returns with the date as the key and the rates as the value.
 
 ## API
 
@@ -63,7 +68,7 @@ plugin so that if you wanted to make API calls from the components themselves
 you could access the right methods like this:
 
 ```js
-this.$currencyApi.getRates({base, date})
+this.$listingsApi.searchListings(this.filters, this.page)
 ```
 
 ### Handling API states for an improved UX
@@ -73,19 +78,30 @@ this.$currencyApi.getRates({base, date})
 - SUCCESS - An action finished successfully
 - ERROR - An action finished with an error
 
+
 ## Base and wrapper components
 
-I've created some base components for a input and a spinner (@/components/base). Creating a
-BaseInput component that encapsulates the input tag allows for a consistent look
-across the app. The base components are globally registered using Webpack's API
-(helpers/registerBaseComponents.js) so that you don't need to import them in
+I've created a base components folder that could hold general components used
+across the project, in this case it only has a button and a spinner
+(@/components/base). The base components are globally registered using Webpack's
+API (helpers/registerBaseComponents.js) so that you don't need to import them in
 every place they're used.
 
-Because I've used 3rd party calendar and custom select components, I've wrapped
-them in some generic components (@/components/common) so that they can be easily reused without having
+This is optional as it does have the disadvantage of these components being
+loaded all the time even if not used.
+
+Because I've used a 3rd party carousel, I've wrapped it in a generic component
+(@/components/GlideCarousel.vue) so that it can be easily reused without having
 to care about what package is used inside. This allows the specific packages to
 be later changed for something else without having to make changes in all of the
 places they're used in.
+
+For the Google Maps library I've created a helper that manages loading the
+script. Right now the map is implemented in the ListingMap.vue component so the
+specific implementation details are present there. A further step would be to create a generic map component as well
+that encapsulates the map functionality so that the actual map provider could be
+swapped without having to make updates in all the places the map is used - the
+users of the map should not be aware of what is used underneath.
 
 ## Assets
 
@@ -101,8 +117,8 @@ Because I've used Tailwind there was no need for scoped CSS in the components
 themselves.
 
 The assets folder also has an SVG folder and Webpack is configured to load SVG's
-so that you can import them as components in your file (import Star from
-"@/assets/svg/star.svg").
+so that you can import them as components in your file (import Play from
+"@/assets/svg/play.svg").
 
 ## Layouts and pages
 
@@ -112,23 +128,16 @@ the specific pages like Home.
 
 ## Vuex
 
-This implementation uses a store (Vuex) and features best practices like setting
+Even though this project is not using a store I've scaffolded the basic
+structure to show the best practices I'd normally use like setting
 constant types for mutations which helps to take advantage of tools like linters and avoid accidental
 typos. Also, a file with constant types can serve as a quick guide on what kind
 of getters, actions, and mutations a Vuex module deals with.
 
-Normally the store should be used for state that is trully global like the
+Generally I'd use a store for state that is trully global like the
 user's name in an app that would appear in multiple places, runtime app config etc.
 
-In a small project such as this one where we don't use modules or use just a few it's
-ok but for large scale apps where you might end up with dozens of modules it
-might be difficult to manage and refactor the code because no one knows what part of the
-app you might be affecting with your changes).
-
-In this case I've used it because it was convenient and because being able to
-track mutations in vue dev tools was helpful.
-
-Otherwise lifting up state in the component tree can be better pattern. Another
+Otherwise lifting up state in the component tree can be the better pattern. Another
 solution would be using a stateful service with Vue observable or upgrading to
 Vue3 which thanks to its setup function makes the usage of Vuex much less
 needed.
