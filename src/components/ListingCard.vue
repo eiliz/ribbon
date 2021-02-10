@@ -14,14 +14,14 @@
           :alt="props.listing.Adres"
           :srcset="
             `
-            ${props.listing.FotoMedium} 242w,
-            ${props.listing.FotoLarge} 580w,
-            ${props.listing.FotoLargest} 922w
+            ${props.listing.FotoMedium.replace('http:', 'https:')} 242w,
+            ${props.listing.FotoLarge.replace('http:', 'https:')} 580w,
+            ${props.listing.FotoLargest.replace('http:', 'https:')} 922w
           `
           "
           sizes="(min-width:768px) calc(.333*(100vw-7rem)),
         (min-width:1280px) calc(.25*(100vw-8.5rem)), calc(100vw-4rem)"
-          :src="props.listing.Foto"
+          :src="props.listing.Foto.replace('http:', 'https:')"
           :loading="props.imageLoading"
           class="w-full h-full object-cover"
       /></router-link>

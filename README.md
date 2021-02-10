@@ -37,6 +37,9 @@ the carousel gets to that point.
 Throughout I've tried to use dynamic imports to make Webpack split the bundles
 into smaller pieces and also to only load them when they're needed.
 
+FYI I had to replace all http image links for https because they were blocked by
+the Mixed Content policy of the browsers.
+
 ## Deployment
 
 Because the API doesn't support CORS I've setup Netlify as a proxy to be able to
