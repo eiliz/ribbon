@@ -195,6 +195,8 @@ export default {
       } catch (err) {
         console.log(err);
         this.status = apiStatus.ERROR;
+        // Forgot to add the error
+        this.error = err;
       }
     },
     setupGalleryMatchMedia() {
